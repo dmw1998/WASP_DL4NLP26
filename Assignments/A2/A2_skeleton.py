@@ -162,10 +162,10 @@ class A2Transformer(PreTrainedModel):
         self.norm = A2RMSNorm(config)
  
         # Unembedding (no bias, OLMo-2 compatible).
-        self.lm_head = nn.Linear
+        self.lm_head = nn.Linear(config.hidden_size, config.vocab_size, bias=False)
  
         # Loss function (same convention as A1: -100 means ignore).
-        self.loss_func = nn.CrossEntropyLoss(ignore_index=-100)(config.hidden_size, config.vocab_size, bias=False)
+        self.loss_func = nn.CrossEntropyLoss(ignore_index=-100)
 
         # This line should be called after you have set up all components.
         self.post_init()
